@@ -11,7 +11,8 @@ async function bookLookUp(searchTerm, filter) {
   let firstPublishYear = data.docs[0].first_publish_year;
   let subjects = data.docs[0].subject;
   console.log(data.docs[0].subject);
-  createBookObjects(data.docs)
+  let bookObjects = createBookObjects(data.docs)
+  listResults(bookObjects)
   return data.docs;
 }
 
@@ -33,6 +34,7 @@ btn.addEventListener("click", (event) => {
   const filter = form.get("term");
   const processedTerm = processString(searchTerm);
  const allData = bookLookUp(processedTerm, filter);
+
 //  console.log(allData)
  // createBookObjects(allData)
 });
@@ -81,9 +83,36 @@ let newBook = new Book (allData[i].title, allData[i].author_name, allData[i].isb
 bookArray.push(newBook)
 }
 
-console.log(bookArray)
+return bookArray
 
 }
+
+function listResults (bookArray) {
+// Adding it to the HTML 
+let body = document.querySelector("body")
+// body.removeChild(ul)
+let ul = document.createElement("ul") 
+
+ul.classList.add("results")
+body.appendChild(ul)
+// li.innerText = "Hello World"
+// li.classList.add("listItem")
+
+
+// let toRemove = document.getElementsByClassName("listItem")
+
+for (let book of bookArray ) {
+
+let li = document.createElement("li")
+let p = document.createElement("p")
+p.innerText =  book.title  + " Author: " + book.author + " ISBN: " + book.isbn
+li.appendChild(p)
+ul.appendChild(li)
+}
+
+}
+
+
 
 // http://openlibrary.org/search.json?title=the+lord+of+the+rings
 

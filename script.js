@@ -11,8 +11,8 @@ async function bookLookUp(searchTerm, filter) {
   let firstPublishYear = data.docs[0].first_publish_year;
   let subjects = data.docs[0].subject;
   console.log(data.docs[0].subject);
-  let bookObjects = createBookObjects(data.docs)
-  listResults(bookObjects)
+  let bookObjects = createBookObjects(data.docs);
+  listResults(bookObjects);
   return data.docs;
 }
 
@@ -33,10 +33,10 @@ btn.addEventListener("click", (event) => {
   const searchTerm = form.get("search");
   const filter = form.get("term");
   const processedTerm = processString(searchTerm);
- const allData = bookLookUp(processedTerm, filter);
+  const allData = bookLookUp(processedTerm, filter);
 
-//  console.log(allData)
- // createBookObjects(allData)
+  //  console.log(allData)
+  // createBookObjects(allData)
 });
 
 // TO DO:
@@ -57,62 +57,60 @@ class Book {
   }
 }
 
-function createBookObjects (allData) {
+function createBookObjects(allData) {
+  let bookArray = [];
 
-let bookArray = []
+  for (let i = 0; i <= 10; i++) {
+    console.log(allData[i]);
 
-for (let i = 0; i <= 10; i++) {
+    if (
+      Array.isArray(allData[i].isbn) &&
+      Array.isArray(allData[i].author_name)
+    ) {
+      allData[i].isbn = allData[i].isbn[0];
+      allData[i].author_name = allData[i].author_name[0];
+    } else if (Array.isArray(allData[i].author_name)) {
+      allData[i].author_name = allData[i].author_name[0];
+    } else if (Array.isArray(allData[i].isbn)) {
+      allData[i].isbn = allData[i].isbn[0];
+    }
 
-console.log(allData[i])
+    let newBook = new Book(
+      allData[i].title,
+      allData[i].author_name,
+      allData[i].isbn,
+      allData[i].first_sentence,
+      allData[i].first_publish_year,
+      allData[i].subject
+    );
+    bookArray.push(newBook);
+  }
 
-if (  Array.isArray(allData[i].isbn) && Array.isArray(allData[i].author_name) ) {
-
-  allData[i].isbn = allData[i].isbn[0]
-  allData[i].author_name = allData[i].author_name[0]
-
-} else if (Array.isArray(allData[i].author_name)) {
-
-  allData[i].author_name = allData[i].author_name[0]
-} else if (Array.isArray(allData[i].isbn)) {
-  
-  allData[i].isbn = allData[i].isbn[0]
+  return bookArray;
 }
 
-let newBook = new Book (allData[i].title, allData[i].author_name, allData[i].isbn, 
-  allData[i].first_sentence, allData[i].first_publish_year, allData[i].subject)
-bookArray.push(newBook)
+function listResults(bookArray) {
+  // Adding it to the HTML
+  let body = document.querySelector("body");
+  // body.removeChild(ul)
+  let ul = document.createElement("ul");
+
+  ul.classList.add("results");
+  body.appendChild(ul);
+  // li.innerText = "Hello World"
+  // li.classList.add("listItem")
+
+  // let toRemove = document.getElementsByClassName("listItem")
+
+  for (let book of bookArray) {
+    let li = document.createElement("li");
+    let p = document.createElement("p");
+    p.innerText =
+      book.title + " Author: " + book.author + " ISBN: " + book.isbn;
+    li.appendChild(p);
+    ul.appendChild(li);
+  }
 }
-
-return bookArray
-
-}
-
-function listResults (bookArray) {
-// Adding it to the HTML 
-let body = document.querySelector("body")
-// body.removeChild(ul)
-let ul = document.createElement("ul") 
-
-ul.classList.add("results")
-body.appendChild(ul)
-// li.innerText = "Hello World"
-// li.classList.add("listItem")
-
-
-// let toRemove = document.getElementsByClassName("listItem")
-
-for (let book of bookArray ) {
-
-let li = document.createElement("li")
-let p = document.createElement("p")
-p.innerText =  book.title  + " Author: " + book.author + " ISBN: " + book.isbn
-li.appendChild(p)
-ul.appendChild(li)
-}
-
-}
-
-
 
 // http://openlibrary.org/search.json?title=the+lord+of+the+rings
 
@@ -122,8 +120,6 @@ ul.appendChild(li)
 // const = dataBooks;
 
 // const bookArray = []
-
-
 
 // createBookObjects(dataBooks) {
 //   for (let i = 0; i <= 10; i++) {

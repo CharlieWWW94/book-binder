@@ -63,6 +63,19 @@ for (let i = 0; i <= 10; i++) {
 
 console.log(allData[i])
 
+if (  Array.isArray(allData[i].isbn) && Array.isArray(allData[i].author_name) ) {
+
+  allData[i].isbn = allData[i].isbn[0]
+  allData[i].author_name = allData[i].author_name[0]
+
+} else if (Array.isArray(allData[i].author_name)) {
+
+  allData[i].author_name = allData[i].author_name[0]
+} else if (Array.isArray(allData[i].isbn)) {
+  
+  allData[i].isbn = allData[i].isbn[0]
+}
+
 let newBook = new Book (allData[i].title, allData[i].author_name, allData[i].isbn, 
   allData[i].first_sentence, allData[i].first_publish_year, allData[i].subject)
 bookArray.push(newBook)

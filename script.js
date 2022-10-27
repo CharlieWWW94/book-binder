@@ -4,7 +4,13 @@ async function bookLookUp(searchTerm, filter) {
   const data = await (
     await fetch(`http://openlibrary.org/search.json?${filter}=${searchTerm}`)
   ).json();
-  console.log(data);
+  let title = data.docs[0].title;
+  let author = data.docs[0].author_name[0];
+  let isbn = data.docs[0].isbn[0];
+  let firstSentence = data.docs[0].first_sentence;
+  let firstPublishYear = data.docs[0].first_publish_year;
+  let subjects = data.docs[0].subject;
+  console.log(data.docs[0].subject);
   return data;
 }
 
@@ -34,11 +40,17 @@ btn.addEventListener("click", (event) => {
 // 2.create a book class.
 // 3. create a list of book instances.
 
-// class Book {
-//   constructor(title, author, isbn, firstSentence) {
-//     this.
-//   }
-// }
+class Book {
+  //add fiction/nonfiction external links
+  constructor(title, author, isbn, firstSentence, firstPublishYear, subjects) {
+    this.title = title;
+    this.author = author;
+    this.isbn = isbn;
+    this.firstSentence = firstSentence;
+    this.firstPublishYear = firstPublishYear;
+    this.subjects = subjects;
+  }
+}
 
 // http://openlibrary.org/search.json?title=the+lord+of+the+rings
 

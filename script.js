@@ -10,11 +10,21 @@ class Book {
   }
 }
 
+//clears page of previous search results
+function clearPage() {
+  let staleResults = document.querySelector(".results");
+  if (staleResults) {
+    const pageBody = document.querySelector("body");
+    pageBody.removeChild(staleResults);
+  }
+}
+
 // Populates page with search results (book objects)
 function listResults(bookArray) {
+  clearPage();
+
   let body = document.querySelector("body");
   let ul = document.createElement("ul");
-
   ul.classList.add("results");
   body.appendChild(ul);
 
@@ -34,8 +44,6 @@ function createBookObjects(allData) {
   let bookArray = [];
 
   for (let i = 0; i <= 10; i++) {
-    console.log(allData[i]);
-
     if (
       Array.isArray(allData[i].isbn) &&
       Array.isArray(allData[i].author_name)
@@ -92,7 +100,7 @@ btn.addEventListener("click", (event) => {
   const searchTerm = form.get("search");
   const filter = form.get("term");
   const processedTerm = processString(searchTerm);
-  const allData = bookLookUp(processedTerm, filter);
+  bookLookUp(processedTerm, filter);
 });
 
 // body.removeChild(ul)

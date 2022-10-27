@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Book Binder</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
-</head>
-<body>
-    <h1>Hello World!</h1>
-    <div><h2>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h2></div>
-    <p>This is stressful</p>
-</body>
+  </head>
+  <body>
+    <form>
+      <label for="search">Search for books</label>
+      <input type="text" id="search" name="search" />
+      <label for="term">Search by...</label>
+      <select name="term" id="term">
+        <option value="title">Title</option>
+        <option value="author">Author</option>
+        <option value="subject">Subject</option>
+        <option value="place">Place</option>
+        <option value="person">Person</option>
+      </select>
+      <button type="submit">Search</button>
+    </form>
+  </body>
 </html>
 
 //

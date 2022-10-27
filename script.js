@@ -1,4 +1,4 @@
-const btn = document.querySelector("button");
+const btn = document.querySelector("#searchButton");
 
 async function bookLookUp(searchTerm, filter) {
   const data = await (
@@ -11,7 +11,8 @@ async function bookLookUp(searchTerm, filter) {
   let firstPublishYear = data.docs[0].first_publish_year;
   let subjects = data.docs[0].subject;
   console.log(data.docs[0].subject);
-  return data;
+  createBookObjects(data.docs)
+  return data.docs;
 }
 
 function processString(userInput) {
@@ -31,7 +32,9 @@ btn.addEventListener("click", (event) => {
   const searchTerm = form.get("search");
   const filter = form.get("term");
   const processedTerm = processString(searchTerm);
-  bookLookUp(processedTerm, filter);
+ const allData = bookLookUp(processedTerm, filter);
+//  console.log(allData)
+ // createBookObjects(allData)
 });
 
 // TO DO:
@@ -52,6 +55,23 @@ class Book {
   }
 }
 
+function createBookObjects (allData) {
+
+let bookArray = []
+
+for (let i = 0; i <= 10; i++) {
+
+console.log(allData[i])
+
+let newBook = new Book (allData[i].title, allData[i].author_name, allData[i].isbn, 
+  allData[i].first_sentence, allData[i].first_publish_year, allData[i].subject)
+bookArray.push(newBook)
+}
+
+console.log(bookArray)
+
+}
+
 // http://openlibrary.org/search.json?title=the+lord+of+the+rings
 
 // const response = await fetch(URL);
@@ -60,6 +80,8 @@ class Book {
 // const = dataBooks;
 
 // const bookArray = []
+
+
 
 // createBookObjects(dataBooks) {
 //   for (let i = 0; i <= 10; i++) {

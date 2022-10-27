@@ -4,15 +4,14 @@ async function bookLookUp(searchTerm, filter) {
   const data = await (
     await fetch(`http://openlibrary.org/search.json?${filter}=${searchTerm}`)
   ).json();
-
-  let author = data.docs[0].author_name[0]
-  let title = data.docs[0].title
-  let isbn = data.docs[0].isbn[0]
-  let subject = data.docs[0].subject
-  let first_sentence = data.docs[0].first_sentence[0]
-  let first_publish_year = data.docs[0].first_publish_year 
-   console.log(first_sentence);
-  // return first_publish_year, author, title, isbn, subject
+  let title = data.docs[0].title;
+  let author = data.docs[0].author_name[0];
+  let isbn = data.docs[0].isbn[0];
+  let firstSentence = data.docs[0].first_sentence;
+  let firstPublishYear = data.docs[0].first_publish_year;
+  let subjects = data.docs[0].subject;
+  console.log(data.docs[0].subject);
+  return data;
 }
 
 function processString(userInput) {
@@ -42,13 +41,14 @@ btn.addEventListener("click", (event) => {
 // 3. create a list of book instances.
 
 class Book {
+  //add fiction/nonfiction external links
   constructor(title, author, isbn, firstSentence, firstPublishYear, subjects) {
-    this.title = title
-    this.author = author
-    this.isbn = isbn
-    this.firstSentence = firstSentence
-    this.firstPublishYear = firstPublishYear
-    this.subjects = subjects
+    this.title = title;
+    this.author = author;
+    this.isbn = isbn;
+    this.firstSentence = firstSentence;
+    this.firstPublishYear = firstPublishYear;
+    this.subjects = subjects;
   }
 }
 

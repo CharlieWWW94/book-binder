@@ -2,4 +2,56 @@
 
 *{
     font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: white
+}
+
+form {
+    text-align: center;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: green;
+    padding: 30px 10%;
+}
+
+li, a, button {
+    font-weight: 500;
+    font-size: 16px;
+    color: #edf0f1;
+    text-decoration: none;
+    background-color: black;
+
+
+}
+.links {
+    list-style: none;
+}
+.links li {
+    display: inline-block;
+    padding: 0px, 20px;
+}
+
+.links li a {
+    transition: all 0.3s ease 0s;
+}
+
+.links li a:hover {
+    color:blueviolet;
+}
+.buttons {
+    padding: 9px 25px;
+    background-color: rgba(0,136,169,1);
+    border:none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+.buttons:hover {
+    background-color: rgba(0,136,169,0.8);
 }

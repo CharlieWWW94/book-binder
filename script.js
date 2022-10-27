@@ -14,26 +14,28 @@ class Book {
 function clearPage() {
   let staleResults = document.querySelector(".results");
   if (staleResults) {
-    const pageBody = document.querySelector("body");
-    pageBody.removeChild(staleResults);
+    resultsContainer.removeChild(staleResults);
   }
 }
 
 // Populates page with search results (book objects)
 function listResults(bookArray) {
   clearPage();
-
-  let body = document.querySelector("body");
   let ul = document.createElement("ul");
   ul.classList.add("results");
-  body.appendChild(ul);
+  resultsContainer.appendChild(ul);
 
   for (let book of bookArray) {
     let li = document.createElement("li");
     li.classList.add("listItem");
     let p = document.createElement("p");
-    p.innerText =
-      book.title + " Author: " + book.author + " ISBN: " + book.isbn;
+    p.innerHTML =
+      "<strong>" +
+      book.title +
+      "</strong> Author: " +
+      book.author +
+      " ISBN: " +
+      book.isbn;
     li.appendChild(p);
     ul.appendChild(li);
   }
@@ -92,6 +94,8 @@ function processString(userInput) {
 
 //Identify search button in document
 const btn = document.querySelector("#searchButton");
+//Identify results section
+const resultsContainer = document.querySelector(".results-container");
 
 //Triggers search and population of HTML with results
 btn.addEventListener("click", (event) => {
@@ -102,6 +106,3 @@ btn.addEventListener("click", (event) => {
   const processedTerm = processString(searchTerm);
   bookLookUp(processedTerm, filter);
 });
-
-// body.removeChild(ul)
-// let toRemove = document.getElementsByClassName("listItem")

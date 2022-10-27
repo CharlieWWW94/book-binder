@@ -4,18 +4,13 @@
     font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
-    background-color:aquamarine;
-
-
+    box-sizing: border-box;
 }
-
-
 
 header {
     display: flex;
     justify-content: flex-end;
-    align-items: center;
-    
+    align-items: center;  
     background-color: black;
     padding: 30px 10%;
 }
@@ -27,11 +22,15 @@ h1{
 li, a, .buttons {
     font-weight: 500;
     font-size: 16px;
-    color: black;
+    color: white;
     text-decoration: none;
-    
 
-
+}
+.options {
+    color:black
+}
+.headerlinks{
+    color: white;
 }
 .links {
     list-style: none;
@@ -68,6 +67,7 @@ li, a, .buttons {
     display: flex;
     padding: 2px;
     border-radius: 10px;
+    
 }
 #select{
     background: #160053;
@@ -83,8 +83,6 @@ li, a, .buttons {
 }
 #select img{
     width: 15px;
-   
-
 }
 
 #select ul{
@@ -99,13 +97,11 @@ li, a, .buttons {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.5s;
-
 }
 
 #select ul li {
     padding: 10px 20px;
     cursor: pointer;
-
 }
 .search-bar input{
     padding: 10px 25px;
@@ -114,18 +110,30 @@ li, a, .buttons {
     outline: none;
     font-size: 18px;
 }
-#select ul.open {
+#select ul.open{
     max-height: 300px;
 }
 
-
 #icon{
     width: 30px;
-    cursor: pointer;
-
-
-    
-
-    
+    cursor: pointer;  
+}
+form {
+    justify-content: center;
+    align-items: center;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    display:flex
+}
+.formbody{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    display:flex
 }
 
+body {
+    background: burlywood;
+    
+}

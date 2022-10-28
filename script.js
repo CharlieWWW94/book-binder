@@ -18,6 +18,7 @@ function clearPage() {
   }
 }
 
+
 // Populates page with search results (book objects)
 function listResults(bookArray) {
   clearPage();
@@ -40,7 +41,7 @@ function listResults(bookArray) {
     let btn = document.createElement("button");
     btn.classList.add("card-btn");
     btn.innerText = "Add";
-    btn.id = `add-btn-${book.isbn}`;
+    btn.id = `${book.isbn}`;
 
     let textContainer = document.createElement("div");
     textContainer.classList.add("text-container");
@@ -66,11 +67,12 @@ function listResults(bookArray) {
     li.appendChild(card);
     ul.appendChild(li);
   }
-}
-
+  addEvents()
+} 
+let bookArray = [];
 //Creates array of book objects to populate HTML with
 function createBookObjects(allData) {
-  let bookArray = [];
+ 
 
   for (let i = 0; i <= 11; i++) {
     if (
@@ -122,6 +124,7 @@ function processString(userInput) {
 
 //Identify search button in document
 const btn = document.querySelector("#searchButton");
+
 //Identify results section
 const resultsContainer = document.querySelector(".results-container");
 
@@ -135,6 +138,48 @@ btn.addEventListener("click", (event) => {
   const processedTerm = processString(searchTerm);
   bookLookUp(processedTerm, filter);
 });
+
+function findBook (isbn) {
+
+// Iterate over bookArray and find the target and return it
+
+for (let i = 0; i <bookArray.length; i++) {
+if (isbn === bookArray[i].isbn) {
+
+
+  return bookArray[i]
+}
+
+}
+
+
+}
+
+function createCard (targetBook) {
+let binder = document.querySelector(".binder")
+let p1 = document.createElement("p")
+p1.innerText = targetBook.subjects
+binder.appendChild(p1)
+}
+
+function addEvents () {
+
+  const cardBtn = document.getElementsByClassName("card-btn")
+  const cardArray = Array.from(cardBtn)
+  cardArray.forEach((target) => {
+
+target.addEventListener ("click", () => {
+  console.log(target.id)
+const targetBook  = findBook(target.id)
+  createCard(targetBook)
+  
+})
+
+  })
+    
+}
+
+
 
 let select = document.getElementById("select");
 let list = document.getElementById("list");

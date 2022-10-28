@@ -10,68 +10,54 @@
   </head>
   <body>
     <header>
-        <h1>BookBinder.com </h1>
-    <form>
-      <label for="search"></label> <!--replace search by book text with a placeholder  -->
-      <div class ="search-bar">
-      <div id = "select">
-        <p id ="selectText">Title</p>
-        <img src="./arrow-down-sign-to-navigate.png">
-        <ul id = "list">
-        <li value="title" class ="options">Title</li>
-        <li value="author" class ="options">Author</li>
-        <li value="subject" class ="options">Subject</li>
-        <li value="place" class ="options">Place</li>
-        <li value="person" class ="options">Person</li>
-        </ul>
+      <h1>BookBinder.com</h1>
+      <form>
+        <label for="search"></label>
+        <!--replace search by book text with a placeholder  -->
+        <div class="search-bar">
+          <div id="select">
+            <p id="selectText">Title</p>
+            <img src="./images/arrow-down-sign-to-navigate.png" />
+            <ul id="list">
+              <li value="title" class="options">Title</li>
+              <li value="author" class="options">Author</li>
+              <li value="subject" class="options">Subject</li>
+              <li value="place" class="options">Place</li>
+              <li value="person" class="options">Person</li>
+            </ul>
+          </div>
+          <input
+            type="text"
+            id="search"
+            name="search"
+            placeholder="Search Book by Title"
+          />
+          <button id="searchButton" type="submit">
+            <img src="./images/icons8-search-50.png" />
+          </button>
         </div>
-        <input type="text" id="search" name="search" placeholder="Search Book by Title"/>
-        <button id="searchButton" type="submit"><img src="./icons8-search-50.png"></button>
-      </div>
-      
-  
-      <!-- <select name="term" id="term">
+
+        <!-- <select name="term" id="term">
         <option value="title">Title</option>
         <option value="author">Author</option>
         <option value="subject">Subject</option>
         <option value="place">Place</option>
         <option value="person">Person</option>
       </select>  -->
-        </form>
-        <nav>
-        <ul class ="links">
-          <li class = "headerlinks"><a href="#">Home</a></li>
-          <li class = "headerlinks"><a href="#">My Books</a></li>
-          <li class = "headerlinks"><a href="#">About</a></li>  
+      </form>
+      <nav>
+        <ul class="links">
+          <li class="headerlinks"><a href="#">Home</a></li>
+          <li class="headerlinks"><a href="#">My Books</a></li>
+          <li class="headerlinks"><a href="#">About</a></li>
         </ul>
         <!--<img src ="moon-icon.png" class="icon"> -->
       </nav>
-    <a href ='#'><button class = "buttons">My Binder</button></a>
-  
-      </header>
-    <footer>
-      
-    </footer>
-
-
-    <script>
-      let select = document.getElementById("select");
-      let list = document.getElementById("list");
-      let selectText = document.getElementById("selectText");
-      let search = document.getElementById("search");
-      let options = document.getElementsByClassName("options");
-
-      select.onclick = function(){
-        list.classList.toggle("open");
-      }
-
-      for(option of options){
-        option.onclick = function(){
-          selectText.innerHTML = this.innerHTML;
-          search.placeholder = "Search Book by " + selectText.innerHTML;
-        }
-      }
-    </script>
+      <a href="#"><button class="buttons">My Binder</button></a>
+    </header>
+    <main>
+      <section class="results-container"></section>
+    </main>
+    <footer></footer>
   </body>
 </html>
-

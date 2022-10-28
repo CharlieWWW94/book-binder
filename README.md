@@ -1,5 +1,4 @@
-#book-binder
-BookBinder
+Title: BookBinder.com
 
 Authors: Anais, Kevin, Rachel, Samuel, Charlie
 
@@ -15,4 +14,4 @@ Usage:
 4. Click on the add button
 5. The Binder will be updated with the book that the User has added.
 
-Implementation Details: Classes, Async, DOM
+Implementation Details: Classes, Async, DOM, HTML, CSS

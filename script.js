@@ -18,7 +18,6 @@ function clearPage() {
   }
 }
 
-
 // Populates page with search results (book objects)
 function listResults(bookArray) {
   clearPage();
@@ -67,13 +66,12 @@ function listResults(bookArray) {
     li.appendChild(card);
     ul.appendChild(li);
   }
-  addEvents()
-} 
+  addEvents();
+}
 let bookArray = [];
 //Creates array of book objects to populate HTML with
 function createBookObjects(allData) {
- 
-
+  bookArray = [];
   for (let i = 0; i <= 11; i++) {
     if (
       Array.isArray(allData[i].isbn) &&
@@ -139,61 +137,58 @@ btn.addEventListener("click", (event) => {
   bookLookUp(processedTerm, filter);
 });
 
-function findBook (isbn) {
+function findBook(isbn) {
+  // Iterate over bookArray and find the target and return it
 
-// Iterate over bookArray and find the target and return it
-
-for (let i = 0; i <bookArray.length; i++) {
-  if (isbn === bookArray[i].isbn) {
-    return bookArray[i]
+  for (let i = 0; i < bookArray.length; i++) {
+    if (isbn === bookArray[i].isbn) {
+      return bookArray[i];
     }
   }
 }
 
-function createCard (targetBook) {
-  let binder = document.querySelector(".binder")
-  let div1 = document.createElement("div")
-  div1.classList.add("binderContents")
-  let h2 = document.createElement("h2")
-  let div2 = document.createElement("div")
-  div2.classList.add("binderContentsMain")
-  let p1 = document.createElement("p")
-  let p2 = document.createElement("p")
-  let p3 = document.createElement("p")
-  p3.classList.add("subjects")
-  let p4 = document.createElement("p")
+function createCard(targetBook) {
+  let binder = document.querySelector(".binder");
+  let div1 = document.createElement("div");
+  div1.classList.add("binderContents");
+  let h2 = document.createElement("h2");
+  let div2 = document.createElement("div");
+  div2.classList.add("binderContentsMain");
+  let p1 = document.createElement("p");
+  let p2 = document.createElement("p");
+  let p3 = document.createElement("p");
+  p3.classList.add("subjects");
+  let p4 = document.createElement("p");
 
-  h2.innerText = targetBook.title
-  p1.innerText = targetBook.author
-  p2.innerText = "Published " + targetBook.firstPublishYear
-  if(targetBook.subjects){
-    p3.innerText = `${targetBook.subjects[0]}, ${targetBook.subjects[1]}, ${targetBook.subjects[2]}`
+  h2.innerText = targetBook.title;
+  p1.innerText = targetBook.author;
+  p2.innerText = "Published " + targetBook.firstPublishYear;
+  if (targetBook.subjects) {
+    p3.innerText = `${targetBook.subjects[0]}, ${targetBook.subjects[1]}, ${targetBook.subjects[2]}`;
   }
-  if(targetBook.firstSentence){
-    p4.innerHTML = `<em>${targetBook.firstSentence[0]}</em>`
-  } 
-  
-  binder.appendChild(div1)
-  div1.appendChild(h2)
-  div1.appendChild(div2)
-  div2.appendChild(p1)
-  div2.appendChild(p2)
-  div2.appendChild(p3)
-  div2.appendChild(p4)
+  if (targetBook.firstSentence) {
+    p4.innerHTML = `<em>${targetBook.firstSentence[0]}</em>`;
+  }
+
+  binder.appendChild(div1);
+  div1.appendChild(h2);
+  div1.appendChild(div2);
+  div2.appendChild(p1);
+  div2.appendChild(p2);
+  div2.appendChild(p3);
+  div2.appendChild(p4);
 }
 
-function addEvents () {
-  const cardBtn = document.getElementsByClassName("card-btn")
-  const cardArray = Array.from(cardBtn)
+function addEvents() {
+  const cardBtn = document.getElementsByClassName("card-btn");
+  const cardArray = Array.from(cardBtn);
   cardArray.forEach((target) => {
-    target.addEventListener ("click", () => {
-      const targetBook  = findBook(target.id)
-    createCard(targetBook)
-    })
-  })
+    target.addEventListener("click", () => {
+      const targetBook = findBook(target.id);
+      createCard(targetBook);
+    });
+  });
 }
-
-
 
 let select = document.getElementById("select");
 let list = document.getElementById("list");

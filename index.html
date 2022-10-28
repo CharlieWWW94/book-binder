@@ -9,6 +9,17 @@
     <script src="script.js" defer></script>
   </head>
   <body>
+    <header>
+      <h1>BookBinder.com</h1>
+      <nav>
+        <ul class="links">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">My Books</a></li>
+          <li><a href="#">About</a></li>
+        </ul>
+      </nav>
+      <a class="buttons" href="#"><button>Contacts</button></a>
+    </header>
     <form>
       <label for="search">Search for books</label>
       <input type="text" id="search" name="search" />
@@ -20,9 +31,9 @@
         <option value="place">Place</option>
         <option value="person">Person</option>
       </select>
-      <button type="submit">Search</button>
+      <button type="submit" id="searchButton">Search</button>
     </form>
+    <section class="results-container"></section>
+    <footer></footer>
   </body>
 </html>
-
-//

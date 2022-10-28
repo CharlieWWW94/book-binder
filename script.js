@@ -36,7 +36,13 @@ function listResults(bookArray) {
       book.author +
       " ISBN: " +
       book.isbn;
+
+    let btn = document.createElement("button");
+    btn.innerText = "Add";
+    btn.id = `add-btn-${book.isbn}`;
+
     li.appendChild(p);
+    li.appendChild(btn);
     ul.appendChild(li);
   }
 }

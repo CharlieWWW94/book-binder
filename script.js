@@ -83,6 +83,7 @@ async function bookLookUp(searchTerm, filter) {
   const data = await (
     await fetch(`http://openlibrary.org/search.json?${filter}=${searchTerm}`)
   ).json();
+  console.log(data.docs);
   let bookObjects = createBookObjects(data.docs);
   listResults(bookObjects);
   return data.docs;
@@ -108,7 +109,25 @@ btn.addEventListener("click", (event) => {
   event.preventDefault();
   const form = new FormData(document.querySelector("form"));
   const searchTerm = form.get("search");
-  const filter = form.get("term");
+  const filter = selectText.innerText.toLowerCase();
+  console.log(filter);
   const processedTerm = processString(searchTerm);
   bookLookUp(processedTerm, filter);
 });
+
+let select = document.getElementById("select");
+let list = document.getElementById("list");
+let selectText = document.getElementById("selectText");
+let search = document.getElementById("search");
+let options = document.getElementsByClassName("options");
+
+select.onclick = function () {
+  list.classList.toggle("open");
+};
+
+for (option of options) {
+  option.onclick = function () {
+    selectText.innerHTML = this.innerHTML;
+    search.placeholder = "Search Book by " + selectText.innerHTML;
+  };
+}

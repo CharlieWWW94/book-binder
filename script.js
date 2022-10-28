@@ -1,50 +1,3 @@
-const btn = document.querySelector("#searchButton");
-
-async function bookLookUp(searchTerm, filter) {
-  const data = await (
-    await fetch(`http://openlibrary.org/search.json?${filter}=${searchTerm}`)
-  ).json();
-  let title = data.docs[0].title;
-  let author = data.docs[0].author_name[0];
-  let isbn = data.docs[0].isbn[0];
-  let firstSentence = data.docs[0].first_sentence;
-  let firstPublishYear = data.docs[0].first_publish_year;
-  let subjects = data.docs[0].subject;
-  console.log(data.docs[0].subject);
-  let bookObjects = createBookObjects(data.docs);
-  listResults(bookObjects);
-  return data.docs;
-}
-
-function processString(userInput) {
-  const wordArr = [];
-  const splitWord = userInput.split(" ");
-
-  splitWord.forEach((word) => {
-    wordArr.push(word);
-  });
-
-  return wordArr.join("+");
-}
-
-btn.addEventListener("click", (event) => {
-  event.preventDefault();
-  const form = new FormData(document.querySelector("form"));
-  const searchTerm = form.get("search");
-  const filter = form.get("term");
-  const processedTerm = processString(searchTerm);
-  const allData = bookLookUp(processedTerm, filter);
-
-  //  console.log(allData)
-  // createBookObjects(allData)
-});
-
-// TO DO:
-
-// 1.access the info we want from json.
-// 2.create a book class.
-// 3. create a list of book instances.
-
 class Book {
   //add fiction/nonfiction external links
   constructor(title, author, isbn, firstSentence, firstPublishYear, subjects) {
@@ -57,12 +10,48 @@ class Book {
   }
 }
 
+//clears page of previous search results
+function clearPage() {
+  let staleResults = document.querySelector(".results");
+  if (staleResults) {
+    resultsContainer.removeChild(staleResults);
+  }
+}
+
+// Populates page with search results (book objects)
+function listResults(bookArray) {
+  clearPage();
+  let ul = document.createElement("ul");
+  ul.classList.add("results");
+  resultsContainer.appendChild(ul);
+
+  for (let book of bookArray) {
+    let li = document.createElement("li");
+    li.classList.add("listItem");
+    let p = document.createElement("p");
+    p.innerHTML =
+      "<strong>" +
+      book.title +
+      "</strong> Author: " +
+      book.author +
+      " ISBN: " +
+      book.isbn;
+
+    let btn = document.createElement("button");
+    btn.innerText = "Add";
+    btn.id = `add-btn-${book.isbn}`;
+
+    li.appendChild(p);
+    li.appendChild(btn);
+    ul.appendChild(li);
+  }
+}
+
+//Creates array of book objects to populate HTML with
 function createBookObjects(allData) {
   let bookArray = [];
 
   for (let i = 0; i <= 10; i++) {
-    console.log(allData[i]);
-
     if (
       Array.isArray(allData[i].isbn) &&
       Array.isArray(allData[i].author_name)
@@ -89,46 +78,37 @@ function createBookObjects(allData) {
   return bookArray;
 }
 
-function listResults(bookArray) {
-  // Adding it to the HTML
-  let body = document.querySelector("body");
-  // body.removeChild(ul)
-  let ul = document.createElement("ul");
-
-  ul.classList.add("results");
-  body.appendChild(ul);
-  // li.innerText = "Hello World"
-  // li.classList.add("listItem")
-
-  // let toRemove = document.getElementsByClassName("listItem")
-
-  for (let book of bookArray) {
-    let li = document.createElement("li");
-    let p = document.createElement("p");
-    p.innerText =
-      book.title + " Author: " + book.author + " ISBN: " + book.isbn;
-    li.appendChild(p);
-    ul.appendChild(li);
-  }
+//Make API call with user filter and search term
+async function bookLookUp(searchTerm, filter) {
+  const data = await (
+    await fetch(`http://openlibrary.org/search.json?${filter}=${searchTerm}`)
+  ).json();
+  let bookObjects = createBookObjects(data.docs);
+  listResults(bookObjects);
+  return data.docs;
 }
 
-// http://openlibrary.org/search.json?title=the+lord+of+the+rings
+//Format user input for API: "book+title+with+plusses"
+function processString(userInput) {
+  const wordArr = [];
+  const splitWord = userInput.split(" ");
+  splitWord.forEach((word) => {
+    wordArr.push(word);
+  });
+  return wordArr.join("+");
+}
 
-// const response = await fetch(URL);
-// const data = await response.json()
+//Identify search button in document
+const btn = document.querySelector("#searchButton");
+//Identify results section
+const resultsContainer = document.querySelector(".results-container");
 
-// const = dataBooks;
-
-// const bookArray = []
-
-// createBookObjects(dataBooks) {
-//   for (let i = 0; i <= 10; i++) {
-//    // const id = i
-//     const title = dataBooks[i].title
-//     const date = dataBooks[i].date
-//     const author = dataBooks[i].author
-//     const book = new Book(title, date, author)
-
-//     bookArray.push(book)
-//   }
-// }
+//Triggers search and population of HTML with results
+btn.addEventListener("click", (event) => {
+  event.preventDefault();
+  const form = new FormData(document.querySelector("form"));
+  const searchTerm = form.get("search");
+  const filter = form.get("term");
+  const processedTerm = processString(searchTerm);
+  bookLookUp(processedTerm, filter);
+});

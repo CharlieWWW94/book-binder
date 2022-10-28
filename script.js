@@ -1,50 +1,3 @@
-const btn = document.querySelector("#searchButton");
-
-async function bookLookUp(searchTerm, filter) {
-  const data = await (
-    await fetch(`http://openlibrary.org/search.json?${filter}=${searchTerm}`)
-  ).json();
-  let title = data.docs[0].title;
-  let author = data.docs[0].author_name[0];
-  let isbn = data.docs[0].isbn[0];
-  let firstSentence = data.docs[0].first_sentence;
-  let firstPublishYear = data.docs[0].first_publish_year;
-  let subjects = data.docs[0].subject;
-  console.log(data.docs[0].subject);
-  let bookObjects = createBookObjects(data.docs)
-  listResults(bookObjects)
-  return data.docs;
-}
-
-function processString(userInput) {
-  const wordArr = [];
-  const splitWord = userInput.split(" ");
-
-  splitWord.forEach((word) => {
-    wordArr.push(word);
-  });
-
-  return wordArr.join("+");
-}
-
-btn.addEventListener("click", (event) => {
-  event.preventDefault();
-  const form = new FormData(document.querySelector("form"));
-  const searchTerm = form.get("search");
-  const filter = form.get("term");
-  const processedTerm = processString(searchTerm);
- const allData = bookLookUp(processedTerm, filter);
-
-//  console.log(allData)
- // createBookObjects(allData)
-});
-
-// TO DO:
-
-// 1.access the info we want from json.
-// 2.create a book class.
-// 3. create a list of book instances.
-
 class Book {
   //add fiction/nonfiction external links
   constructor(title, author, isbn, firstSentence, firstPublishYear, subjects) {
@@ -57,82 +10,145 @@ class Book {
   }
 }
 
-function createBookObjects (allData) {
-
-let bookArray = []
-
-for (let i = 0; i <= 10; i++) {
-
-console.log(allData[i])
-
-if (  Array.isArray(allData[i].isbn) && Array.isArray(allData[i].author_name) ) {
-
-  allData[i].isbn = allData[i].isbn[0]
-  allData[i].author_name = allData[i].author_name[0]
-
-} else if (Array.isArray(allData[i].author_name)) {
-
-  allData[i].author_name = allData[i].author_name[0]
-} else if (Array.isArray(allData[i].isbn)) {
-  
-  allData[i].isbn = allData[i].isbn[0]
+//clears page of previous search results
+function clearPage() {
+  let staleResults = document.querySelector(".results");
+  if (staleResults) {
+    resultsContainer.removeChild(staleResults);
+  }
 }
 
-let newBook = new Book (allData[i].title, allData[i].author_name, allData[i].isbn, 
-  allData[i].first_sentence, allData[i].first_publish_year, allData[i].subject)
-bookArray.push(newBook)
+// Populates page with search results (book objects)
+function listResults(bookArray) {
+  clearPage();
+  let ul = document.createElement("ul");
+  ul.classList.add("results");
+  resultsContainer.appendChild(ul);
+
+  for (let book of bookArray) {
+    let li = document.createElement("li");
+    li.classList.add("listItem");
+    let card = document.createElement("card");
+    card.classList.add("results-card");
+    let imgContainer = document.createElement("imgContainer");
+    imgContainer.classList.add("img-container");
+
+    let img = document.createElement("img");
+    img.classList.add("img");
+    img.setAttribute("src", "./images/icons8-story-book-96.png");
+
+    let btn = document.createElement("button");
+    btn.classList.add("card-btn");
+    btn.innerText = "Add";
+    btn.id = `add-btn-${book.isbn}`;
+
+    let textContainer = document.createElement("div");
+    textContainer.classList.add("text-container");
+
+    let h3 = document.createElement("h3");
+    h3.innerText = book.title;
+    h3.classList.add("h3");
+    let p1 = document.createElement("p");
+    p1.classList.add("p1");
+    let p2 = document.createElement("p");
+    p2.classList.add("p2");
+    p1.innerText = "Author: " + book.author;
+    p2.innerText = "ISBN: " + book.isbn;
+
+    card.appendChild(imgContainer);
+    imgContainer.appendChild(img);
+    imgContainer.appendChild(btn);
+    card.appendChild(textContainer);
+    textContainer.appendChild(h3);
+    textContainer.appendChild(p1);
+    textContainer.appendChild(p2);
+
+    li.appendChild(card);
+    ul.appendChild(li);
+  }
 }
 
-return bookArray
+//Creates array of book objects to populate HTML with
+function createBookObjects(allData) {
+  let bookArray = [];
 
+  for (let i = 0; i <= 11; i++) {
+    if (
+      Array.isArray(allData[i].isbn) &&
+      Array.isArray(allData[i].author_name)
+    ) {
+      allData[i].isbn = allData[i].isbn[0];
+      allData[i].author_name = allData[i].author_name[0];
+    } else if (Array.isArray(allData[i].author_name)) {
+      allData[i].author_name = allData[i].author_name[0];
+    } else if (Array.isArray(allData[i].isbn)) {
+      allData[i].isbn = allData[i].isbn[0];
+    }
+
+    let newBook = new Book(
+      allData[i].title,
+      allData[i].author_name,
+      allData[i].isbn,
+      allData[i].first_sentence,
+      allData[i].first_publish_year,
+      allData[i].subject
+    );
+    bookArray.push(newBook);
+  }
+
+  return bookArray;
 }
 
-function listResults (bookArray) {
-// Adding it to the HTML 
-let body = document.querySelector("body")
-// body.removeChild(ul)
-let ul = document.createElement("ul") 
-
-ul.classList.add("results")
-body.appendChild(ul)
-// li.innerText = "Hello World"
-// li.classList.add("listItem")
-
-
-// let toRemove = document.getElementsByClassName("listItem")
-
-for (let book of bookArray ) {
-
-let li = document.createElement("li")
-let p = document.createElement("p")
-p.innerText =  book.title  + " Author: " + book.author + " ISBN: " + book.isbn
-li.appendChild(p)
-ul.appendChild(li)
+//Make API call with user filter and search term
+async function bookLookUp(searchTerm, filter) {
+  const data = await (
+    await fetch(`http://openlibrary.org/search.json?${filter}=${searchTerm}`)
+  ).json();
+  console.log(data.docs);
+  let bookObjects = createBookObjects(data.docs);
+  listResults(bookObjects);
+  return data.docs;
 }
 
+//Format user input for API: "book+title+with+plusses"
+function processString(userInput) {
+  const wordArr = [];
+  const splitWord = userInput.split(" ");
+  splitWord.forEach((word) => {
+    wordArr.push(word);
+  });
+  return wordArr.join("+");
 }
 
+//Identify search button in document
+const btn = document.querySelector("#searchButton");
+//Identify results section
+const resultsContainer = document.querySelector(".results-container");
 
+//Triggers search and population of HTML with results
+btn.addEventListener("click", (event) => {
+  event.preventDefault();
+  const form = new FormData(document.querySelector("form"));
+  const searchTerm = form.get("search");
+  const filter = selectText.innerText.toLowerCase();
+  console.log(filter);
+  const processedTerm = processString(searchTerm);
+  bookLookUp(processedTerm, filter);
+});
 
-// http://openlibrary.org/search.json?title=the+lord+of+the+rings
+let select = document.getElementById("select");
+let list = document.getElementById("list");
+let selectText = document.getElementById("selectText");
+let search = document.getElementById("search");
+let options = document.getElementsByClassName("options");
 
-// const response = await fetch(URL);
-// const data = await response.json()
+select.onclick = function () {
+  list.classList.toggle("open");
+};
 
-// const = dataBooks;
-
-// const bookArray = []
-
-
-
-// createBookObjects(dataBooks) {
-//   for (let i = 0; i <= 10; i++) {
-//    // const id = i
-//     const title = dataBooks[i].title
-//     const date = dataBooks[i].date
-//     const author = dataBooks[i].author
-//     const book = new Book(title, date, author)
-
-//     bookArray.push(book)
-//   }
-// }
+for (option of options) {
+  option.onclick = function () {
+    selectText.innerHTML = this.innerHTML;
+    search.placeholder = "Search Book by " + selectText.innerHTML;
+  };
+}

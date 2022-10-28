@@ -33,9 +33,22 @@ function listResults(bookArray) {
     li.classList.add("listItem");
   let card = document.createElement("card")
   card.classList.add("results-card")
+  let imgContainer = document.createElement("imgContainer")
+imgContainer.classList.add("img-container")
+
+
   let img = document.createElement("img")
   img.classList.add("img")
   img.setAttribute("src", "./images/icons8-story-book-96.png")
+
+  let btn = document.createElement("button");
+    btn.classList.add("card-btn")
+    btn.innerText = "Add";
+    btn.id = `add-btn-${book.isbn}`;
+
+  let textContainer = document.createElement("div")
+  textContainer.classList.add("text-container")
+
   let h3 = document.createElement("h3")
   h3.innerText = book.title
   h3.classList.add("h3")
@@ -46,17 +59,18 @@ function listResults(bookArray) {
    p1.innerText = "Author: " + book.author
    p2.innerText = "ISBN: " + book.isbn
 
-    let btn = document.createElement("button");
-    btn.classList.add("card-btn")
-    btn.innerText = "Add";
-    btn.id = `add-btn-${book.isbn}`;
-    card.appendChild(img)
-    card.appendChild(h3);
-    card.appendChild(p1);
-    card.appendChild(p2);
-    card.appendChild(btn);
+    
+  card.appendChild(imgContainer)
+  imgContainer.appendChild(img)
+  imgContainer.appendChild(btn);
+card.appendChild(textContainer)
+    textContainer.appendChild(h3);
+    textContainer.appendChild(p1);
+    textContainer.appendChild(p2);
+    
     li.appendChild(card)
     ul.appendChild(li);
+
   }
 }
 

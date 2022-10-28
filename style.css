@@ -144,7 +144,7 @@ form {
 }
 
 body {
-    background: burlywood;
+    background: #f9f9f9;
     
 }
 .search-bar button img {
@@ -166,9 +166,74 @@ body {
      background: red;
 }
 
-
-header .search-bar{   
+main{
+    
 }
+
+
+.results-card {
+color: white;
+display: flex;
+justify-content: space-around;
+
+
+
+}
+.results {
+    margin-left: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 20px;
+}
+
+.listItem{
+background-color: rgb(153, 150, 150);    
+margin-top: 20px;
+
+border-radius: 12px;
+
+}
+.card-btn{
+width: 100%;
+min-height: 30px;
+border-radius: 25px;
+border: 0;
+background-color: rgba(0,136,169,1);
+color: #fff;
+margin: 10px auto
+
+}
+.h3{
+
+}
+.img{
+    align-self: center;
+    
+
+}
+.p1, .p2 {
+
+}
+.text-container {
+    margin-top: 20px;
+}
+
+.img-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+
+
+
+
+
+
+
+
 
 
 @media (min-width: 1025px){

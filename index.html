@@ -11,17 +11,6 @@
   <body>
     <header>
         <h1>BookBinder.com </h1>
-        <nav>
-          <ul class ="links">
-            <li class = "headerlinks"><a href="#">Home</a></li>
-            <li class = "headerlinks"><a href="#">My Books</a></li>
-            <li class = "headerlinks"><a href="#">About</a></li>  
-          </ul>
-          <!--<img src ="moon-icon.png" class="icon"> -->
-        </nav>
-      <a href ='#'><button class = "buttons">My Binder</button></a>
-      </header>
-  <div class ="formbody">
     <form>
       <label for="search"></label> <!--replace search by book text with a placeholder  -->
       <div class ="search-bar">
@@ -40,7 +29,7 @@
         <button id="searchButton" type="submit"><img src="./icons8-search-50.png"></button>
       </div>
       
-      <label for="term"></label>
+  
       <!-- <select name="term" id="term">
         <option value="title">Title</option>
         <option value="author">Author</option>
@@ -49,10 +38,22 @@
         <option value="person">Person</option>
       </select>  -->
         </form>
-      </div>
+        <nav>
+        <ul class ="links">
+          <li class = "headerlinks"><a href="#">Home</a></li>
+          <li class = "headerlinks"><a href="#">My Books</a></li>
+          <li class = "headerlinks"><a href="#">About</a></li>  
+        </ul>
+        <!--<img src ="moon-icon.png" class="icon"> -->
+      </nav>
+    <a href ='#'><button class = "buttons">My Binder</button></a>
+  
+      </header>
     <footer>
       
     </footer>
+
+
     <script>
       let select = document.getElementById("select");
       let list = document.getElementById("list");
